@@ -29,10 +29,11 @@ PKG_NAME:=bmx6
 PKG_SOURCE_PROTO:=git
 
 PKG_SOURCE_URL:=git://bmx6.net/bmx6.git
+#PKG_SOURCE_URL:=file:///usr/src/bmx6/bmx6-private.bare
 #PKG_SOURCE_URL:=git://github.com/axn/bmx6.git
 
-PKG_REV:=0a761a621b203af6c9edcd94872f91c1c60fa383
-PKG_VERSION:=r2013051001
+PKG_REV:=bcd86262165bf2067183627f740d74e885d61c39
+PKG_VERSION:=r2013060201
 PKG_RELEASE:=4
 
 PKG_SOURCE_VERSION:=$(PKG_REV)
@@ -45,9 +46,12 @@ include $(INCLUDE_DIR)/package.mk
 
 TARGET_CFLAGS += $(FPIC)
 
+#	EXTRA_CFLAGS="$(TARGET_CFLAGS) -I. -I$(STAGING_DIR)/usr/include -DNO_DEBUG_ALL -DNO_DEBUG_DUMP" \
+
+
 MAKE_ARGS += \
-	EXTRA_CFLAGS="$(TARGET_CFLAGS) -I. -I$(STAGING_DIR)/usr/include -DNO_DEBUG_ALL -DNO_DEBUG_DUMP" \
-	EXTRA_LDFLAGS="-L$(STAGING_DIR)/usr/lib " \
+	EXTRA_CFLAGS="$(TARGET_CFLAGS) -I. -I$(STAGING_DIR)/usr/include -DNO_DEBUG_DUMP" \
+	EXTRA_LDFLAGS="$(TARGET_LDFLAGS) -L$(STAGING_DIR)/usr/lib " \
 	REVISION_VERSION="$(PKG_REV)" \
 	CC="$(TARGET_CC)" \
 	INSTALL_DIR="$(PKG_INSTALL_DIR)" \
@@ -61,7 +65,7 @@ define Package/bmx6/Default
   TITLE:=BMX6 layer 3 routing daemon
   URL:=http://bmx6.net/
   MAINTAINER:=Axel Neumann <neumann@cgws.de>
-  DEPENDS:=+kmod-ip6-tunnel +kmod-iptunnel6 +kmod-tun
+  DEPENDS:=+zlib +libcyassl +kmod-ip6-tunnel +kmod-iptunnel6 +kmod-tun
 endef
 
 define Package/bmx6/description
